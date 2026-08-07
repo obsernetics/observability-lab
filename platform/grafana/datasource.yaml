@@ -25,3 +25,8 @@ data:
         uid: tempo
         access: proxy
         url: http://tempo.observability.svc:3200
+      - name: Pyroscope
+        type: grafana-pyroscope-datasource
+        uid: pyroscope
+        access: proxy
+        url: http://pyroscope.observability.svc:4040

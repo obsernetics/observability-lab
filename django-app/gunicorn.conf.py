@@ -24,3 +24,10 @@ def post_fork(server, worker):
     trace.set_tracer_provider(provider)
     DjangoInstrumentor().instrument()
     SQLite3Instrumentor().instrument()
+
+    import pyroscope
+    pyroscope.configure(
+        application_name=os.environ.get("PYROSCOPE_APPLICATION_NAME", "guestbook"),
+        server_address=os.environ.get("PYROSCOPE_SERVER_ADDRESS", "http://pyroscope.observability.svc:4040"),
+        tags={"env": "lab"},
+    )

@@ -5,3 +5,4 @@ opentelemetry-sdk==1.29.0
 opentelemetry-exporter-otlp-proto-grpc==1.29.0
 opentelemetry-instrumentation-django==0.50b0
 opentelemetry-instrumentation-sqlite3==0.50b0
+pyroscope-io==0.8.8

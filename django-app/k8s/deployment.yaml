@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: guestbook
-          image: ghcr.io/obsernetics/guestbook:v4
+          image: ghcr.io/obsernetics/guestbook:v5
           ports:
             - containerPort: 8000
           env:
@@ -29,6 +29,8 @@ spec:
               value: guestbook
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               value: alloy.observability.svc:4317
+            - name: PYROSCOPE_SERVER_ADDRESS
+              value: http://pyroscope.observability.svc:4040
           volumeMounts:
             - name: data
               mountPath: /data

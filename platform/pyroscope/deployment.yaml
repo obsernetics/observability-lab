@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pyroscope
+  namespace: observability
+  labels: { app: pyroscope }
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: pyroscope }
+  template:
+    metadata:
+      labels: { app: pyroscope }
+    spec:
+      containers:
+        - name: pyroscope
+          image: grafana/pyroscope:1.13.4
+          args:
+            - "-pyroscopedb.data-path=/data"
+          ports:
+            - { name: http, containerPort: 4040 }
+          volumeMounts:
+            - { name: data, mountPath: /data }
+          readinessProbe:
+            httpGet: { path: /ready, port: 4040 }
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          resources:
+            requests: { cpu: 100m, memory: 256Mi }
+            limits: { cpu: "1", memory: 768Mi }
+      volumes:
+        - { name: data, emptyDir: {} }
