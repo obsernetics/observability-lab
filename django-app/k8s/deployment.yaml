@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: guestbook
-          image: ghcr.io/obsernetics/guestbook:v1
+          image: ghcr.io/obsernetics/guestbook:v2
           ports:
             - containerPort: 8000
           env:
