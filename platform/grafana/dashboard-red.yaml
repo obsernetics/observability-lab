@@ -11,7 +11,7 @@ data:
       "tags": ["django", "observability"],
       "timezone": "browser",
       "schemaVersion": 39,
-      "version": 1,
+      "version": 2,
       "refresh": "10s",
       "time": { "from": "now-15m", "to": "now" },
       "panels": [
@@ -33,7 +33,7 @@ data:
           "fieldConfig": { "defaults": { "unit": "reqps", "color": { "mode": "fixed", "fixedColor": "red" }, "custom": { "fillOpacity": 20, "lineWidth": 2 } }, "overrides": [] },
           "targets": [
             { "refId": "A", "datasource": { "type": "prometheus", "uid": "mimir" },
-              "expr": "sum(rate(django_http_responses_total_by_status_total{status=~\"5..\"}[$__rate_interval]))",
+              "expr": "sum(rate(django_http_responses_total_by_status_total{status=~\"5..\"}[$__rate_interval])) or vector(0)",
               "legendFormat": "5xx" }
           ]
         },
