@@ -15,6 +15,7 @@ def post_fork(server, worker):
     from opentelemetry.sdk.trace.export import BatchSpanProcessor
     from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
     from opentelemetry.instrumentation.django import DjangoInstrumentor
+    from opentelemetry.instrumentation.sqlite3 import SQLite3Instrumentor
 
     endpoint = os.environ.get("OTEL_EXPORTER_OTLP_ENDPOINT", "alloy.observability.svc:4317")
     service = os.environ.get("OTEL_SERVICE_NAME", "guestbook")
@@ -22,3 +23,4 @@ def post_fork(server, worker):
     provider.add_span_processor(BatchSpanProcessor(OTLPSpanExporter(endpoint=endpoint, insecure=True)))
     trace.set_tracer_provider(provider)
     DjangoInstrumentor().instrument()
+    SQLite3Instrumentor().instrument()
