@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alloy
+  namespace: observability
+  labels: { app: alloy }
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: alloy }
+  template:
+    metadata:
+      labels: { app: alloy }
+    spec:
+      serviceAccountName: alloy
+      containers:
+        - name: alloy
+          image: grafana/alloy:v1.5.1
+          args:
+            - "run"
+            - "/etc/alloy/config.alloy"
+            - "--server.http.listen-addr=0.0.0.0:12345"
+            - "--storage.path=/tmp/alloy"
+          ports:
+            - { name: http, containerPort: 12345 }
+          volumeMounts:
+            - { name: config, mountPath: /etc/alloy }
+          resources:
+            requests: { cpu: 50m, memory: 128Mi }
+            limits: { cpu: 500m, memory: 512Mi }
+      volumes:
+        - name: config
+          configMap: { name: alloy-config }
