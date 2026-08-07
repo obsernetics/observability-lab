@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: guestbook
-          image: ghcr.io/obsernetics/guestbook:v2
+          image: ghcr.io/obsernetics/guestbook:v3
           ports:
             - containerPort: 8000
           env:
@@ -25,6 +25,10 @@ spec:
               value: "0"
             - name: DJANGO_DB_PATH
               value: /data/db.sqlite3
+            - name: OTEL_SERVICE_NAME
+              value: guestbook
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: alloy.observability.svc:4317
           volumeMounts:
             - name: data
               mountPath: /data

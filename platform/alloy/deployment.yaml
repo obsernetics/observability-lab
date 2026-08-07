@@ -23,6 +23,8 @@ spec:
             - "--storage.path=/tmp/alloy"
           ports:
             - { name: http, containerPort: 12345 }
+            - { name: otlp-grpc, containerPort: 4317 }
+            - { name: otlp-http, containerPort: 4318 }
           volumeMounts:
             - { name: config, mountPath: /etc/alloy }
           resources:

@@ -20,3 +20,8 @@ data:
         uid: loki
         access: proxy
         url: http://loki.observability.svc:3100
+      - name: Tempo
+        type: tempo
+        uid: tempo
+        access: proxy
+        url: http://tempo.observability.svc:3200

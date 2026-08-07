@@ -85,3 +85,25 @@ data:
         url = "http://loki.observability.svc:3100/loki/api/v1/push"
       }
     }
+
+    // ---------- traces ----------
+    otelcol.receiver.otlp "default" {
+      grpc {
+        endpoint = "0.0.0.0:4317"
+      }
+      http {
+        endpoint = "0.0.0.0:4318"
+      }
+      output {
+        traces = [otelcol.exporter.otlp.tempo.input]
+      }
+    }
+
+    otelcol.exporter.otlp "tempo" {
+      client {
+        endpoint = "tempo.observability.svc:4317"
+        tls {
+          insecure = true
+        }
+      }
+    }
