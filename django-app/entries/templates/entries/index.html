@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Guestbook</title>
+  <style>
+    :root{color-scheme:dark;}
+    body{margin:0;background:#0b0f14;color:#c9d1d9;font-family:system-ui,Segoe UI,Roboto,sans-serif;}
+    .wrap{max-width:720px;margin:0 auto;padding:48px 20px;}
+    h1{color:#e6edf3;font-size:28px;margin:0 0 4px;}
+    .sub{color:#8b98a5;margin:0 0 28px;}
+    form{display:flex;gap:10px;flex-wrap:wrap;background:#0d1117;border:1px solid #222b36;border-radius:12px;padding:16px;margin-bottom:24px;}
+    input,textarea{background:#0b0f14;border:1px solid #222b36;border-radius:8px;color:#c9d1d9;padding:10px 12px;font-size:14px;}
+    input{flex:1 1 160px;} textarea{flex:1 1 100%;min-height:64px;resize:vertical;}
+    button{background:#238636;border:0;color:#fff;border-radius:8px;padding:10px 18px;font-size:14px;font-weight:600;cursor:pointer;}
+    button:hover{background:#2ea043;}
+    .entry{background:#0d1117;border:1px solid #222b36;border-radius:12px;padding:14px 16px;margin-bottom:12px;}
+    .entry .who{color:#58a6ff;font-weight:600;}
+    .entry .when{color:#6b7684;font-size:12px;float:right;}
+    .entry .msg{margin:6px 0 0;line-height:1.5;}
+    .empty{color:#6b7684;text-align:center;padding:24px;}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Guestbook</h1>
+    <p class="sub">A tiny Django app, observed with LGTM + Pyroscope.</p>
+    <form method="post">{% csrf_token %}
+      <input name="name" placeholder="Your name" maxlength="80" required>
+      <textarea name="message" placeholder="Leave a message..." maxlength="500" required></textarea>
+      <button type="submit">Sign</button>
+    </form>
+    {% for e in entries %}
+      <div class="entry">
+        <span class="when">{{ e.created|date:"Y-m-d H:i" }}</span>
+        <span class="who">{{ e.name }}</span>
+        <p class="msg">{{ e.message }}</p>
+      </div>
+    {% empty %}
+      <div class="empty">No entries yet. Be the first to sign.</div>
+    {% endfor %}
+  </div>
+</body>
+</html>
