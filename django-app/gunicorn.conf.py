@@ -5,6 +5,10 @@ errorlog = "-"
 
 def post_fork(server, worker):
     import os
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "guestbook.settings")
+    import django
+    django.setup()
+
     from opentelemetry import trace
     from opentelemetry.sdk.resources import Resource
     from opentelemetry.sdk.trace import TracerProvider
