@@ -13,13 +13,9 @@ spec:
       labels: { app: alloy }
     spec:
       serviceAccountName: alloy
-      hostPID: true
       containers:
         - name: alloy
           image: grafana/alloy:v1.5.1
-          securityContext:
-            privileged: true
-            runAsUser: 0
           args:
             - "run"
             - "/etc/alloy/config.alloy"
